@@ -21,7 +21,7 @@ const makeRequestParam = (
 ): ChatRequest => {
   let sendMessages = messages.map((v) => ({
     role: v.role,
-    content: v.content,
+    content: v.webContent ?? v.content,
   }));
 
   const modelConfig = {
@@ -92,6 +92,24 @@ export async function requestChat(
     return response;
   } catch (error) {
     console.error("[Request Chat] ", error, res.body);
+  }
+}
+
+export async function requestWebSearch(query: string) {
+  const res = await fetch(
+    `https://ai-stars-api.vercel.app/ai/search?q=${query}`,
+    {
+      method: "GET",
+      headers: {
+        ...getHeaders(),
+      },
+    },
+  );
+
+  try {
+    return await res.json();
+  } catch (error) {
+    console.error("[Request Web Search] ", error, res.body);
   }
 }
 

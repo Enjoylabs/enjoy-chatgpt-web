@@ -20,6 +20,8 @@ import DarkIcon from "../icons/dark.svg";
 import AutoIcon from "../icons/auto.svg";
 import BottomIcon from "../icons/bottom.svg";
 import StopIcon from "../icons/pause.svg";
+import SearchCloseIcon from "../icons/search_close.svg";
+import SearchOpenIcon from "../icons/search_open.svg";
 
 import {
   Message,
@@ -328,6 +330,10 @@ export function ChatActions(props: {
     config.update((config) => (config.theme = nextTheme));
   }
 
+  const webSearch = config.webSearch;
+  function switchWebSearch() {
+    config.update((config) => (config.webSearch = !config.webSearch));
+  }
   // stop all responses
   const couldStop = ControllerPool.hasPending();
   const stopAll = () => ControllerPool.stopAll();
@@ -386,6 +392,16 @@ export function ChatActions(props: {
         }}
       >
         <MaskIcon />
+      </div>
+      <div
+        className={`${chatStyle["chat-input-action"]} clickable`}
+        onClick={switchWebSearch}
+      >
+        {webSearch ? (
+          <SearchOpenIcon />
+        ) : !webSearch ? (
+          <SearchCloseIcon />
+        ) : null}
       </div>
     </div>
   );
@@ -476,7 +492,9 @@ export function Chat() {
   const doSubmit = (userInput: string) => {
     if (userInput.trim() === "") return;
     setIsLoading(true);
-    chatStore.onUserInput(userInput).then(() => setIsLoading(false));
+    chatStore
+      .onUserInput(userInput, config.webSearch)
+      .then(() => setIsLoading(false));
     setBeforeInput(userInput);
     setUserInput("");
     setPromptHints([]);
@@ -550,7 +568,9 @@ export function Chat() {
     setIsLoading(true);
     const content = session.messages[userIndex].content;
     deleteMessage(userIndex);
-    chatStore.onUserInput(content).then(() => setIsLoading(false));
+    chatStore
+      .onUserInput(content, config.webSearch)
+      .then(() => setIsLoading(false));
     inputRef.current?.focus();
   };
 

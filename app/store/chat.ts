@@ -6,6 +6,7 @@ import {
   ControllerPool,
   requestChatStream,
   requestWithPrompt,
+  requestWebSearch,
 } from "../requests";
 import { trimTopic } from "../utils";
 
@@ -21,6 +22,7 @@ export type Message = ChatCompletionResponseMessage & {
   isError?: boolean;
   id?: number;
   model?: ModelType;
+  webContent?: string;
 };
 
 export function createMessage(override: Partial<Message>): Message {
@@ -30,6 +32,7 @@ export function createMessage(override: Partial<Message>): Message {
     role: "user",
     content: "",
     ...override,
+    webContent: undefined,
   };
 }
 
@@ -89,7 +92,7 @@ interface ChatStore {
   deleteSession: (index: number) => void;
   currentSession: () => ChatSession;
   onNewMessage: (message: Message) => void;
-  onUserInput: (content: string) => Promise<void>;
+  onUserInput: (content: string, isWebSearch: boolean) => Promise<void>;
   summarizeSession: () => void;
   updateStat: (message: Message) => void;
   updateCurrentSession: (updater: (session: ChatSession) => void) => void;
@@ -235,7 +238,7 @@ export const useChatStore = create<ChatStore>()(
         get().summarizeSession();
       },
 
-      async onUserInput(content) {
+      async onUserInput(content, isWebSearch: boolean) {
         const session = get().currentSession();
         const modelConfig = session.mask.modelConfig;
 
@@ -260,6 +263,41 @@ export const useChatStore = create<ChatStore>()(
         // save user's and bot's message
         get().updateCurrentSession((session) => {
           session.messages.push(userMessage);
+          session.messages.push(botMessage);
+        });
+
+        console.log("isWebSearch", isWebSearch);
+        if (isWebSearch) {
+          const query = encodeURIComponent(content);
+          const body = await requestWebSearch(query);
+          console.log("user web search", body);
+          const webSearchPrompt = `
+Using the provided web search results, write a comprehensive reply to the given query.
+If the provided search results refer to multiple subjects with the same name, write separate answers for each subject.
+Make sure to cite results using \`[[number](URL)]\` notation after the reference.
+
+Web search json results:
+"""
+${JSON.stringify(body)}
+"""
+
+Current date:
+"""
+${new Date().toISOString()}
+"""
+
+Query:
+"""
+${content}
+"""
+
+Reply in Chinese and markdown.
+          `;
+          console.log(webSearchPrompt);
+          userMessage.webContent = webSearchPrompt;
+        }
+        // save user's and bot's message
+        get().updateCurrentSession((session) => {
           session.messages.push(botMessage);
         });
 
