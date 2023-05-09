@@ -96,15 +96,12 @@ export async function requestChat(
 }
 
 export async function requestWebSearch(query: string) {
-  const res = await fetch(
-    `https://ai-stars-api.vercel.app/ai/search?q=${query}`,
-    {
-      method: "GET",
-      headers: {
-        ...getHeaders(),
-      },
+  const res = await fetch(`/api/web-search?query=${query}`, {
+    method: "GET",
+    headers: {
+      ...getHeaders(),
     },
-  );
+  });
 
   try {
     return await res.json();
