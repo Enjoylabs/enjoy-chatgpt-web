@@ -1,23 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const WEB_SEARCH_BASE_URL = process.env.WEB_SEARCH_BASE_URL;
-
+console.log("WEB_SEARCH_BASE_URL", WEB_SEARCH_BASE_URL);
 async function makeRequest(req: NextRequest) {
   try {
     const content = req.nextUrl.searchParams.get("query");
-    console.log(content);
-    if (!console) return;
-    console.log(WEB_SEARCH_BASE_URL);
+    console.log("web-search", content, WEB_SEARCH_BASE_URL);
     const query = encodeURIComponent(content!);
     const api = await fetch(
       `${WEB_SEARCH_BASE_URL}/search?q=${query}&max_results=3`,
     );
+
     const res = new NextResponse(api.body);
     res.headers.set("Content-Type", "application/json");
     res.headers.set("Cache-Control", "no-cache");
     return res;
   } catch (e) {
-    console.error("[OpenAI] ", req.body, e);
+    console.error("[web-search] ", req.body, e);
     return NextResponse.json(
       {
         error: true,
