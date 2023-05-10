@@ -104,7 +104,13 @@ export async function requestWebSearch(query: string) {
   });
 
   try {
-    return await res.json();
+    const result = await res.json();
+
+    console.log("requestWebSearch", {
+      content: query,
+      result: result["data"],
+    });
+    return result["data"];
   } catch (error) {
     console.error("[Request Web Search] ", error, res.body);
   }

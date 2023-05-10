@@ -265,12 +265,9 @@ export const useChatStore = create<ChatStore>()(
           session.messages.push(userMessage);
           session.messages.push(botMessage);
         });
-
-        console.log("isWebSearch", isWebSearch);
         if (isWebSearch) {
           const query = encodeURIComponent(content);
           const body = await requestWebSearch(query);
-          console.log("user web search", body);
           const webSearchPrompt = `
 Using the provided web search results, write a comprehensive reply to the given query.
 If the provided search results refer to multiple subjects with the same name, write separate answers for each subject.
