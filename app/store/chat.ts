@@ -263,7 +263,6 @@ export const useChatStore = create<ChatStore>()(
         // save user's and bot's message
         get().updateCurrentSession((session) => {
           session.messages.push(userMessage);
-          session.messages.push(botMessage);
         });
         if (isWebSearch) {
           const query = encodeURIComponent(content);
