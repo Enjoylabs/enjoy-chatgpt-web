@@ -5,7 +5,6 @@ console.log("WEB_SEARCH_BASE_URL", WEB_SEARCH_BASE_URL);
 async function makeRequest(req: NextRequest) {
   try {
     const content = req.nextUrl.searchParams.get("query");
-    console.log("web-search", content, WEB_SEARCH_BASE_URL);
     const query = encodeURIComponent(content!);
     const api = await fetch(
       `${WEB_SEARCH_BASE_URL}/search?q=${query}&max_results=3`,
@@ -14,6 +13,7 @@ async function makeRequest(req: NextRequest) {
     const res = new NextResponse(api.body);
     res.headers.set("Content-Type", "application/json");
     res.headers.set("Cache-Control", "no-cache");
+
     return res;
   } catch (e) {
     console.error("[web-search] ", req.body, e);
