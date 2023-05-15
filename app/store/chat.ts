@@ -2,12 +2,6 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 import { type ChatCompletionResponseMessage } from "openai";
-import {
-  ControllerPool,
-  requestChatStream,
-  requestWithPrompt,
-  requestWebSearch,
-} from "../requests";
 import { trimTopic } from "../utils";
 
 import Locale from "../locales";
@@ -15,7 +9,7 @@ import { showToast } from "../components/ui-lib";
 import { ModelType } from "./config";
 import { createEmptyMask, Mask } from "./mask";
 import { StoreKey } from "../constant";
-import { api, RequestMessage } from "../client/api";
+import { api, RequestMessage, requestWebSearch } from "../client/api";
 import { ChatControllerPool } from "../client/controller";
 import { prettyObject } from "../utils/format";
 
