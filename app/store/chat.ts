@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import { type ChatCompletionResponseMessage } from "openai";
 import { trimTopic } from "../utils";
 
 import Locale from "../locales";
