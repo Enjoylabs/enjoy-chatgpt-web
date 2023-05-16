@@ -122,6 +122,7 @@ export function NewChat() {
       }
     },
   });
+  console.log("new chat masks", masks);
 
   return (
     <div className={styles["new-chat"]}>

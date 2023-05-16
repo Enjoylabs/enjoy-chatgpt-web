@@ -87,7 +87,7 @@ export const CN_MASKS: BuiltinMask[] = [
     builtin: true,
   },
   {
-    avatar: "1f469-200d-1f4bd",
+    avatar: "1f4b8",
     name: "温柔体贴的开朗男孩小天",
     context: [
       {
@@ -110,7 +110,7 @@ export const CN_MASKS: BuiltinMask[] = [
     builtin: true,
   },
   {
-    avatar: "1f469-200d-1f4be",
+    avatar: "270d-fe0f",
     name: "爱用emoji的萌妹子小婉",
     context: [
       {

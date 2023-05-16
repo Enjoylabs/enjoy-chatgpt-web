@@ -314,6 +314,7 @@ Reply in Chinese and markdown.
             set(() => ({}));
           },
           onFinish(message) {
+            console.log("onFinish", message);
             botMessage.streaming = false;
             botMessage.content = message;
             get().onNewMessage(botMessage);
