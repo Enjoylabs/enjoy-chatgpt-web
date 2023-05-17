@@ -18,7 +18,6 @@ export type ChatMessage = RequestMessage & {
   isError?: boolean;
   id?: number;
   model?: ModelType;
-  webContent?: string;
 };
 
 export function createMessage(override: Partial<ChatMessage>): ChatMessage {
@@ -27,8 +26,7 @@ export function createMessage(override: Partial<ChatMessage>): ChatMessage {
     date: new Date().toLocaleString(),
     role: "user",
     content: "",
-    ...override,
-    webContent: undefined,
+    ...override
   };
 }
 
@@ -268,7 +266,7 @@ ${content}
 Reply in Chinese and markdown.
           `;
           console.log(webSearchPrompt);
-          userMessage.webContent = webSearchPrompt;
+          userMessage.content = webSearchPrompt;
         }
 
         const botMessage: ChatMessage = createMessage({
