@@ -97,7 +97,11 @@ export async function requestWebSearch(query: string) {
       content: query,
       result: result["data"],
     });
-    return result["data"];
+    let answers = [];
+    for (const item of result["data"]) {
+      answers.push(item['answer'])
+    }
+    return answers;
   } catch (error) {
     console.error("[Request Web Search] ", error, res.body);
   }
