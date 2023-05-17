@@ -242,34 +242,6 @@ export const useChatStore = create<ChatStore>()(
           content,
         });
 
-        const botMessage: ChatMessage = createMessage({
-          role: "assistant",
-          streaming: true,
-          id: userMessage.id! + 1,
-          model: modelConfig.model,
-        });
-
-        const systemInfo = createMessage({
-          role: "system",
-          content: `IMPRTANT: You are a virtual assistant powered by the ${
-            modelConfig.model
-          } model, now time is ${new Date().toLocaleString()}}`,
-          id: botMessage.id! + 1,
-        });
-
-        // get recent messages
-        const systemMessages = [systemInfo];
-        const recentMessages = get().getMessagesWithMemory();
-        const sendMessages = systemMessages.concat(
-          recentMessages.concat(userMessage),
-        );
-        const sessionIndex = get().currentSessionIndex;
-        const messageIndex = get().currentSession().messages.length + 1;
-
-        // save user's and bot's message
-        get().updateCurrentSession((session) => {
-          session.messages.push(userMessage);
-        });
         if (isWebSearch) {
           const query = encodeURIComponent(content);
           const body = await requestWebSearch(query);
@@ -298,6 +270,36 @@ Reply in Chinese and markdown.
           console.log(webSearchPrompt);
           userMessage.webContent = webSearchPrompt;
         }
+
+        const botMessage: ChatMessage = createMessage({
+          role: "assistant",
+          streaming: true,
+          id: userMessage.id! + 1,
+          model: modelConfig.model,
+        });
+
+        const systemInfo = createMessage({
+          role: "system",
+          content: `IMPRTANT: You are a virtual assistant powered by the ${
+            modelConfig.model
+          } model, now time is ${new Date().toLocaleString()}}`,
+          id: botMessage.id! + 1,
+        });
+
+        // get recent messages
+        const systemMessages = [systemInfo];
+        const recentMessages = get().getMessagesWithMemory();
+        const sendMessages = systemMessages.concat(
+          recentMessages.concat(userMessage),
+        );
+        const sessionIndex = get().currentSessionIndex;
+        const messageIndex = get().currentSession().messages.length + 1;
+
+        // save user's and bot's message
+        get().updateCurrentSession((session) => {
+          session.messages.push(userMessage);
+        });
+        
         // save user's and bot's message
         get().updateCurrentSession((session) => {
           session.messages.push(botMessage);
