@@ -277,9 +277,8 @@ export const useChatStore = create<ChatStore>()(
         }
 
         const recentMessages = get().getMessagesWithMemory();
-        const sendMessages = systemMessages.concat(
-          recentMessages.concat(userMessage),
-        );
+        const sendMessages = recentMessages.concat(userMessage);
+
         const sessionIndex = get().currentSessionIndex;
         const messageIndex = get().currentSession().messages.length + 1;
 
