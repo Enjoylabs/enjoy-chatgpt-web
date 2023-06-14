@@ -1,5 +1,5 @@
 import { useDebouncedCallback } from "use-debounce";
-import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
+import { useState, useRef, useEffect, useLayoutEffect } from "react";
 
 import SendWhiteIcon from "../icons/send-white.svg";
 import BrainIcon from "../icons/brain.svg";
@@ -279,57 +279,6 @@ function ClearContextDivider() {
   );
 }
 
-function ChatAction(props: {
-  text: string;
-  icon: JSX.Element;
-  onClick: () => void;
-}) {
-  const iconRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState({
-    full: 20,
-    icon: 20,
-  });
-
-  function updateWidth() {
-    if (!iconRef.current || !textRef.current) return;
-    const getWidth = (dom: HTMLDivElement) => dom.getBoundingClientRect().width;
-    const textWidth = getWidth(textRef.current);
-    const iconWidth = getWidth(iconRef.current);
-    setWidth({
-      full: textWidth + iconWidth,
-      icon: iconWidth,
-    });
-  }
-
-  useEffect(() => {
-    updateWidth();
-  }, []);
-
-  return (
-    <div
-      className={`${chatStyle["chat-input-action"]} clickable`}
-      onClick={() => {
-        props.onClick();
-        setTimeout(updateWidth, 1);
-      }}
-      style={
-        {
-          "--icon-width": `${width.icon}px`,
-          "--full-width": `${width.full}px`,
-        } as React.CSSProperties
-      }
-    >
-      <div ref={iconRef} className={chatStyle["icon"]}>
-        {props.icon}
-      </div>
-      <div className={chatStyle["text"]} ref={textRef}>
-        {props.text}
-      </div>
-    </div>
-  );
-}
-
 function useScrollToBottom() {
   // for auto-scroll
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -381,60 +330,61 @@ export function ChatActions(props: {
   return (
     <div className={chatStyle["chat-input-actions"]}>
       {couldStop && (
-        <ChatAction
+        <div
+          className={`${chatStyle["chat-input-action"]} clickable`}
           onClick={stopAll}
-          text={Locale.Chat.InputActions.Stop}
-          icon={<StopIcon />}
-        />
+        >
+          <StopIcon />
+        </div>
       )}
       {!props.hitBottom && (
-        <ChatAction
+        <div
+          className={`${chatStyle["chat-input-action"]} clickable`}
           onClick={props.scrollToBottom}
-          text={Locale.Chat.InputActions.ToBottom}
-          icon={<BottomIcon />}
-        />
+        >
+          <BottomIcon />
+        </div>
       )}
       {props.hitBottom && (
-        <ChatAction
+        <div
+          className={`${chatStyle["chat-input-action"]} clickable`}
           onClick={props.showPromptModal}
-          text={Locale.Chat.InputActions.Settings}
-          icon={<SettingsIcon />}
-        />
+        >
+          <SettingsIcon />
+        </div>
       )}
 
-      <ChatAction
+      <div
+        className={`${chatStyle["chat-input-action"]} clickable`}
         onClick={nextTheme}
-        text={Locale.Chat.InputActions.Theme[theme]}
-        icon={
-          <>
-            {theme === Theme.Auto ? (
-              <AutoIcon />
-            ) : theme === Theme.Light ? (
-              <LightIcon />
-            ) : theme === Theme.Dark ? (
-              <DarkIcon />
-            ) : null}
-          </>
-        }
-      />
+      >
+        {theme === Theme.Auto ? (
+          <AutoIcon />
+        ) : theme === Theme.Light ? (
+          <LightIcon />
+        ) : theme === Theme.Dark ? (
+          <DarkIcon />
+        ) : null}
+      </div>
 
-      <ChatAction
+      <div
+        className={`${chatStyle["chat-input-action"]} clickable`}
         onClick={props.showPromptHints}
-        text={Locale.Chat.InputActions.Prompt}
-        icon={<PromptIcon />}
-      />
+      >
+        <PromptIcon />
+      </div>
 
-      <ChatAction
+      <div
+        className={`${chatStyle["chat-input-action"]} clickable`}
         onClick={() => {
           navigate(Path.Masks);
         }}
-        text={Locale.Chat.InputActions.Masks}
-        icon={<MaskIcon />}
-      />
+      >
+        <MaskIcon />
+      </div>
 
-      <ChatAction
-        text={Locale.Chat.InputActions.Clear}
-        icon={<BreakIcon />}
+      <div
+        className={`${chatStyle["chat-input-action"]} clickable`}
         onClick={() => {
           chatStore.updateCurrentSession((session) => {
             if (session.clearContextIndex === session.messages.length) {
@@ -445,7 +395,9 @@ export function ChatActions(props: {
             }
           });
         }}
-      />
+      >
+        <BreakIcon />
+      </div>
     </div>
   );
 }

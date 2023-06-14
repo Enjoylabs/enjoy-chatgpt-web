@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getServerSideConfig } from "../config/server";
+const serverConfig = getServerSideConfig();
 
 export const OPENAI_URL = "api.openai.com";
 const DEFAULT_PROTOCOL = "https";
 const PROTOCOL = process.env.PROTOCOL ?? DEFAULT_PROTOCOL;
 const BASE_URL = process.env.BASE_URL ?? OPENAI_URL;
-const DISABLE_GPT4 = !!process.env.DISABLE_GPT4;
 
 export async function requestOpenai(req: NextRequest) {
   const controller = new AbortController();
@@ -47,13 +48,11 @@ export async function requestOpenai(req: NextRequest) {
   };
 
   // #1815 try to refuse gpt4 request
-  if (DISABLE_GPT4 && req.body) {
+  if (!serverConfig.enableGPT4 && req.body) {
     try {
       const clonedBody = await req.text();
       fetchOptions.body = clonedBody;
-
       const jsonBody = JSON.parse(clonedBody);
-
       if ((jsonBody?.model ?? "").includes("gpt-4")) {
         return NextResponse.json(
           {
@@ -79,6 +78,14 @@ export async function requestOpenai(req: NextRequest) {
 
     // to disbale ngnix buffering
     newHeaders.set("X-Accel-Buffering", "no");
+
+    // const jsonText = await res.clone().text();
+    // console.log("[openai-request]", {
+    //   "header": fetchOptions.headers,
+    //   "body": fetchOptions.body,
+    //   "data":  jsonText,
+    //   "status": res.status,
+    // })
 
     return new Response(res.body, {
       status: res.status,

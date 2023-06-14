@@ -82,7 +82,8 @@ export function NewChat() {
   const maskStore = useMaskStore();
 
   const masks = maskStore.getAll();
-  const groups = useMaskGroup(masks);
+  //const groups = useMaskGroup(masks);
+  const groups = [masks];
 
   const navigate = useNavigate();
   const config = useAppConfig();

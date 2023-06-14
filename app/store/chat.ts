@@ -12,6 +12,19 @@ import { api, RequestMessage } from "../client/api";
 import { ChatControllerPool } from "../client/controller";
 import { prettyObject } from "../utils/format";
 
+import { useAccessStore } from "../store";
+
+import { createClient } from "@supabase/supabase-js";
+
+// Provide a custom schema. Defaul to "public".
+const supabase = createClient(
+  "https://lcnfqokdvnugovbyqpzw.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxjbmZxb2tkdm51Z292YnlxcHp3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQyOTQ3OTcsImV4cCI6MTk5OTg3MDc5N30.cizQ-VB86VP3U1icRZ7WvPms1KdeMuEZIMB8X7Ut8PY",
+  {
+    db: { schema: "public" },
+  },
+);
+
 export type ChatMessage = RequestMessage & {
   date: string;
   streaming?: boolean;
@@ -260,7 +273,7 @@ export const useChatStore = create<ChatStore>()(
         const systemMessages = [];
         // if user define a mask with context prompts, wont send system info
         if (session.mask.context.length === 0) {
-          systemMessages.push(systemInfo);
+          //systemMessages.push(systemInfo);
         }
 
         const recentMessages = get().getMessagesWithMemory();
@@ -288,7 +301,20 @@ export const useChatStore = create<ChatStore>()(
             }
             set(() => ({}));
           },
+          async onStore(message) {
+            const data = {
+              input: content,
+              output: message,
+              tokens: content.length + message.length,
+              history: sendMessages.slice(0, -1),
+              model_config: { modelConfig },
+              access_token: useAccessStore.getState().accessCode,
+            };
+            const { error } = await supabase.from("message").insert(data);
+            //console.log([data, error])
+          },
           onFinish(message) {
+            //console.log("message", {"input":content, "history": message.slice(0,-1), "config":modelConfig, "context": sendMessages, "auth": useAccessStore.getState()})
             botMessage.streaming = false;
             if (message) {
               botMessage.content = message;
@@ -447,6 +473,7 @@ export const useChatStore = create<ChatStore>()(
                     message.length > 0 ? trimTopic(message) : DEFAULT_TOPIC),
               );
             },
+            onStore(message) {},
           });
         }
 
@@ -473,12 +500,12 @@ export const useChatStore = create<ChatStore>()(
 
         const lastSummarizeIndex = session.messages.length;
 
-        console.log(
-          "[Chat History] ",
-          toBeSummarizedMsgs,
-          historyMsgLength,
-          modelConfig.compressMessageLengthThreshold,
-        );
+        // console.log(
+        //   "[Chat History] ",
+        //   toBeSummarizedMsgs,
+        //   historyMsgLength,
+        //   modelConfig.compressMessageLengthThreshold,
+        // );
 
         if (
           historyMsgLength > modelConfig.compressMessageLengthThreshold &&
@@ -498,6 +525,7 @@ export const useChatStore = create<ChatStore>()(
               console.log("[Memory] ", message);
               session.lastSummarizeIndex = lastSummarizeIndex;
             },
+            onStore(message) {},
             onError(err) {
               console.error("[Summarize] ", err);
             },

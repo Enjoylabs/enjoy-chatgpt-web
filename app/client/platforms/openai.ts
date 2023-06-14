@@ -44,7 +44,7 @@ export class ChatGPTApi implements LLMApi {
       presence_penalty: modelConfig.presence_penalty,
     };
 
-    console.log("[Request] openai payload: ", requestPayload);
+    //console.log("[Chat Request] openai payload: ", requestPayload);
 
     const shouldStream = !!options.config.stream;
     const controller = new AbortController();
@@ -72,6 +72,7 @@ export class ChatGPTApi implements LLMApi {
         const finish = () => {
           if (!finished) {
             options.onFinish(responseText);
+            options.onStore(responseText);
             finished = true;
           }
         };
@@ -150,8 +151,10 @@ export class ChatGPTApi implements LLMApi {
         clearTimeout(requestTimeoutId);
 
         const resJson = await res.json();
+
         const message = this.extractMessage(resJson);
         options.onFinish(message);
+        options.onStore(message);
       }
     } catch (e) {
       console.log("[Request] failed to make a chat reqeust", e);

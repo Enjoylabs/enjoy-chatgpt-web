@@ -8,8 +8,8 @@ declare global {
       BASE_URL?: string;
       PROXY_URL?: string;
       VERCEL?: string;
-      HIDE_USER_API_KEY?: string; // disable user's api key input
-      DISABLE_GPT4?: string; // allow user to use gpt-4 or not
+      HIDE_USER_API_KEY?: number; // disable user's api key input
+      DISABLE_GPT4?: number; // allow user to use gpt-4 or not
     }
   }
 }
@@ -34,7 +34,7 @@ export const getServerSideConfig = () => {
     );
   }
 
-  return {
+  const data = {
     apiKey: process.env.OPENAI_API_KEY,
     code: process.env.CODE,
     codes: ACCESS_CODES,
@@ -45,4 +45,8 @@ export const getServerSideConfig = () => {
     hideUserApiKey: !!process.env.HIDE_USER_API_KEY,
     enableGPT4: !process.env.DISABLE_GPT4,
   };
+
+  console.log("ServerSideConfig", data);
+
+  return data;
 };

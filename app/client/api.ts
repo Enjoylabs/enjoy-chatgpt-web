@@ -28,6 +28,7 @@ export interface ChatOptions {
 
   onUpdate?: (message: string, chunk: string) => void;
   onFinish: (message: string) => void;
+  onStore: (message: string) => void;
   onError?: (err: Error) => void;
   onController?: (controller: AbortController) => void;
 }
