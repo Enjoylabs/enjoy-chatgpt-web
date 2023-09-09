@@ -40,3 +40,4 @@ dev
 
 *.key
 *.key.pub
+.env.local

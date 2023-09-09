@@ -344,16 +344,20 @@ export const useChatStore = create<ChatStore>()(
               input: content,
               output: message,
               tokens: content.length + message.length,
-              history: JSON.stringify(sendMessages.slice(0, -1)),
-              model_config: JSON.stringify(modelConfig),
+              history: sendMessages.slice(0, -1),
+              model_config: modelConfig,
               access_token: useAccessStore.getState().accessCode,
             };
-            console.log("dddddddd");
-            try {
-              await sql`INSERT INTO enjoy-chatgpt-web-log (input, output, tokens,history,model_config,access_token) VALUES (${data.input}, ${data.output}, ${data.tokens}, ${data.history},${data.model_config},${data.access_token});`;
-            } catch (error) {
-              console.log([data, error]);
-            }
+            fetch("/api/storage", {
+              method: "POST",
+              body: JSON.stringify(data),
+              headers: {
+                "Content-Type": "application/json",
+                "Cache-Control": "no-store",
+              },
+            }).catch(() => {
+              console.error("[Strorage] failed to fetch config");
+            });
             //console.log([data, error])
           },
           onFinish(message) {

@@ -18,7 +18,7 @@ declare global {
   }
 }
 
-console.info("process.env", process.env);
+//console.info("process.env", process.env);
 
 const ACCESS_CODES = (function getAccessCodes(): Set<string> {
   const code = process.env.CODE;
@@ -51,6 +51,6 @@ export const getServerSideConfig = () => {
     hideBalanceQuery: process.env.HIDE_BALANCE_QUERY === "yes",
   };
 
-  console.info("ServerSideConfig", data);
+  //console.info("ServerSideConfig", data);
   return data;
 };
