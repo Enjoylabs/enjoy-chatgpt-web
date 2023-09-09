@@ -21,16 +21,7 @@ import { nanoid } from "nanoid";
 
 import { useAccessStore } from "../store";
 
-import { createClient } from "@supabase/supabase-js";
-
-// Provide a custom schema. Defaul to "public".
-const supabase = createClient(
-  "https://lcnfqokdvnugovbyqpzw.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxjbmZxb2tkdm51Z292YnlxcHp3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQyOTQ3OTcsImV4cCI6MTk5OTg3MDc5N30.cizQ-VB86VP3U1icRZ7WvPms1KdeMuEZIMB8X7Ut8PY",
-  {
-    db: { schema: "public" },
-  },
-);
+import { sql } from "@vercel/postgres";
 
 export type ChatMessage = RequestMessage & {
   date: string;
@@ -353,11 +344,16 @@ export const useChatStore = create<ChatStore>()(
               input: content,
               output: message,
               tokens: content.length + message.length,
-              history: sendMessages.slice(0, -1),
-              model_config: { modelConfig },
+              history: JSON.stringify(sendMessages.slice(0, -1)),
+              model_config: JSON.stringify(modelConfig),
               access_token: useAccessStore.getState().accessCode,
             };
-            const { error } = await supabase.from("message").insert(data);
+            console.log("dddddddd");
+            try {
+              await sql`INSERT INTO enjoy-chatgpt-web-log (input, output, tokens,history,model_config,access_token) VALUES (${data.input}, ${data.output}, ${data.tokens}, ${data.history},${data.model_config},${data.access_token});`;
+            } catch (error) {
+              console.log([data, error]);
+            }
             //console.log([data, error])
           },
           onFinish(message) {

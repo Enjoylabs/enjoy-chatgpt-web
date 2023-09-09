@@ -13,13 +13,15 @@ declare global {
       BUILD_MODE?: "standalone" | "export";
       BUILD_APP?: string; // is building desktop app
       HIDE_BALANCE_QUERY?: string; // allow user to query balance or not
+      LOG_LEVEL?: string;
     }
   }
 }
 
+console.info("process.env", process.env);
+
 const ACCESS_CODES = (function getAccessCodes(): Set<string> {
   const code = process.env.CODE;
-
   try {
     const codes = (code?.split(",") ?? [])
       .filter((v) => !!v)
@@ -36,7 +38,6 @@ export const getServerSideConfig = () => {
       "[Server Config] you are importing a nodejs-only module outside of nodejs",
     );
   }
-
   const data = {
     apiKey: process.env.OPENAI_API_KEY,
     code: process.env.CODE,
@@ -44,13 +45,12 @@ export const getServerSideConfig = () => {
     needCode: ACCESS_CODES.size > 0,
     baseUrl: process.env.BASE_URL,
     proxyUrl: process.env.PROXY_URL,
-    isVercel: !!process.env.VERCEL,
-    hideUserApiKey: !!process.env.HIDE_USER_API_KEY,
-    disableGPT4: !!process.env.DISABLE_GPT4,
-    hideBalanceQuery: !!process.env.HIDE_BALANCE_QUERY,
+    isVercel: process.env.VERCEL === "yes",
+    hideUserApiKey: process.env.HIDE_USER_API_KEY === "yes",
+    disableGPT4: process.env.DISABLE_GPT4 === "yes",
+    hideBalanceQuery: process.env.HIDE_BALANCE_QUERY === "yes",
   };
 
-  console.log("ServerSideConfig", data);
-
+  console.info("ServerSideConfig", data);
   return data;
 };
