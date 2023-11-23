@@ -21,8 +21,6 @@ import { nanoid } from "nanoid";
 
 import { useAccessStore } from "../store";
 
-import { sql } from "@vercel/postgres";
-
 export type ChatMessage = RequestMessage & {
   date: string;
   streaming?: boolean;

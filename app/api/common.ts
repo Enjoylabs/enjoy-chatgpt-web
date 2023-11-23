@@ -37,7 +37,6 @@ export async function requestOpenai(req: NextRequest) {
     10 * 60 * 1000,
   );
 
-  const fetchUrl = `${baseUrl}/${openaiPath}`;
   const fetchOptions: RequestInit = {
     headers: {
       "Content-Type": "application/json",
@@ -59,11 +58,10 @@ export async function requestOpenai(req: NextRequest) {
   const clonedBody = await req.text();
   fetchOptions.body = clonedBody;
   const jsonBody = JSON.parse(clonedBody);
-  if (jsonBody.model == "llama2") {
-    jsonBody.model = "codellama/CodeLlama-34b-Instruct-hf";
+  if (jsonBody.model == "codellama/CodeLlama-34b-Instruct-hf") {
     fetchOptions.headers["Authorization"] =
-      "esecret_qb22f4nbdtrvzq5hexg296lvfk";
-    baseUrl = "https://api.endpoints.anyscale.com/v1";
+      "Bearer esecret_qb22f4nbdtrvzq5hexg296lvfk";
+    baseUrl = "https://api.endpoints.anyscale.com";
   }
 
   // #1815 try to refuse gpt4 request
@@ -88,6 +86,7 @@ export async function requestOpenai(req: NextRequest) {
   }
 
   try {
+    const fetchUrl = `${baseUrl}/${openaiPath}`;
     const res = await fetch(fetchUrl, fetchOptions);
 
     // to prevent browser prompt for credentials
