@@ -14,9 +14,7 @@ export async function requestOpenai(req: NextRequest) {
     "/api/openai/",
     "",
   );
-
   let baseUrl = BASE_URL;
-
   if (!baseUrl.startsWith("http")) {
     baseUrl = `${PROTOCOL}://${baseUrl}`;
   }
@@ -58,12 +56,19 @@ export async function requestOpenai(req: NextRequest) {
     signal: controller.signal,
   };
 
+  const clonedBody = await req.text();
+  fetchOptions.body = clonedBody;
+  const jsonBody = JSON.parse(clonedBody);
+  if (jsonBody.model == "llama2") {
+    jsonBody.model = "codellama/CodeLlama-34b-Instruct-hf";
+    fetchOptions.headers["Authorization"] =
+      "esecret_qb22f4nbdtrvzq5hexg296lvfk";
+    baseUrl = "https://api.endpoints.anyscale.com/v1";
+  }
+
   // #1815 try to refuse gpt4 request
   if (serverConfig.disableGPT4 && req.body) {
     try {
-      const clonedBody = await req.text();
-      fetchOptions.body = clonedBody;
-      const jsonBody = JSON.parse(clonedBody);
       if ((jsonBody?.model ?? "").includes("gpt-4")) {
         return NextResponse.json(
           {
@@ -78,6 +83,8 @@ export async function requestOpenai(req: NextRequest) {
     } catch (e) {
       console.error("[OpenAI] gpt4 filter", e);
     }
+
+    // try to refuse gpt4 request
   }
 
   try {
