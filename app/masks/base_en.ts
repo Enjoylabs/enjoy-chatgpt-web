@@ -32,7 +32,7 @@ export const EN_MASKS: BuiltinMask[] = [
     name: "llama2",
     context: [],
     modelConfig: {
-      model: "codellama/CodeLlama-34b-Instruct-hf",
+      model: "meta-llama/Llama-2-70b-chat-hf",
       temperature: 0.5,
       max_tokens: 2000,
       presence_penalty: 0,
