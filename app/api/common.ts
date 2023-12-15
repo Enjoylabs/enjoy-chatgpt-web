@@ -58,7 +58,7 @@ export async function requestOpenai(req: NextRequest) {
   const clonedBody = await req.text();
   fetchOptions.body = clonedBody;
   const jsonBody = JSON.parse(clonedBody);
-  if (jsonBody.model == "codellama/CodeLlama-34b-Instruct-hf") {
+  if (jsonBody.model == "meta-llama/Llama-2-70b-chat-hf") {
     const headers = fetchOptions.headers as HeadersInit & {
       Authorization?: string;
     };

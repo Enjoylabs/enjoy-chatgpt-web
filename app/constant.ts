@@ -112,7 +112,7 @@ export const DEFAULT_MODELS = [
     available: true,
   },
   {
-    name: "codellama/CodeLlama-34b-Instruct-hf",
+    name: "meta-llama/Llama-2-70b-chat-hf",
     available: true,
   },
 ] as const;
