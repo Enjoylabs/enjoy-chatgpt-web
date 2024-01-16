@@ -62,7 +62,7 @@ export async function requestOpenai(req: NextRequest) {
     const headers = fetchOptions.headers as HeadersInit & {
       Authorization?: string;
     };
-    headers.Authorization = "Bearer esecret_qb22f4nbdtrvzq5hexg296lvfk";
+    headers.Authorization = process.env.ANYSCALE_API_KEY;
     baseUrl = "https://api.endpoints.anyscale.com";
     fetchOptions.headers = headers;
   }
