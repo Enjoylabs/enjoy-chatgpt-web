@@ -2,7 +2,7 @@ dir="$(dirname "$0")"
 npm install
 npm run export
 #打包
-rm app.zip
-zip -r app.zip package.json .next/ public/
+rm app_prod.zip
+zip -r app_prod.zip package.json .next/ public/ .ebextensions/ .elasticbeanstalk/
 eb deploy --debug
 

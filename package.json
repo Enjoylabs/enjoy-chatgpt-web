@@ -7,8 +7,6 @@
     "build": "cross-env BUILD_MODE=standalone next build ",
     "start": "next start -p $PORT",
     "lint": "next lint",
-    "export": "cross-env BUILD_MODE=export BUILD_APP=1 next build",
-    "export:dev": "cross-env BUILD_MODE=export BUILD_APP=1 next dev",
     "app:dev": "yarn tauri dev",
     "app:build": "yarn tauri build",
     "prompts": "node ./scripts/fetch-prompts.mjs",

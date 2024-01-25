@@ -17,4 +17,4 @@ global:
   sc: git
   workspace_type: Application
 deploy:
-  artifact: app.zip
+  artifact: app_prod.zip
