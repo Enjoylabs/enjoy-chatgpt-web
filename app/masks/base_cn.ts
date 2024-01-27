@@ -7,6 +7,7 @@ export const CN_MASKS: BuiltinMask[] = [
     context: [],
     modelConfig: {
       model: "gpt-3.5-turbo",
+      provider: "openai",
       temperature: 0.5,
       max_tokens: 2000,
       presence_penalty: 0,
@@ -24,6 +25,7 @@ export const CN_MASKS: BuiltinMask[] = [
     context: [],
     modelConfig: {
       model: "gpt-4-turbo-preview",
+      provider: "openai",
       temperature: 0.5,
       max_tokens: 2000,
       presence_penalty: 0,
@@ -41,6 +43,7 @@ export const CN_MASKS: BuiltinMask[] = [
     context: [],
     modelConfig: {
       model: "meta-llama/Llama-2-70b-chat-hf",
+      provider: "anyscale",
       temperature: 0.5,
       max_tokens: 2000,
       presence_penalty: 0,
