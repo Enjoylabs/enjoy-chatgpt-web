@@ -20,10 +20,10 @@ export const CN_MASKS: BuiltinMask[] = [
   },
   {
     avatar: "1f60e",
-    name: "gpt-4",
+    name: "gpt-4-turbo-preview",
     context: [],
     modelConfig: {
-      model: "gpt-4",
+      model: "gpt-4-turbo-preview",
       temperature: 0.5,
       max_tokens: 2000,
       presence_penalty: 0,
