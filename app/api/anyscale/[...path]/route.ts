@@ -17,7 +17,8 @@ async function handle(
 
   const serverConfig = getServerSideConfig();
 
-  let baseUrl = serverConfig.googleUrl || GEMINI_BASE_URL;
+  let baseUrl =
+    serverConfig.anyScaleUrl || "https://api.endpoints.anyscale.com";
 
   if (!baseUrl.startsWith("http")) {
     baseUrl = `https://${baseUrl}`;
@@ -47,11 +48,8 @@ async function handle(
   }
 
   const bearToken = req.headers.get("Authorization") ?? "";
-  const token = bearToken.trim().replaceAll("Bearer ", "").trim();
 
-  const key = token ? token : serverConfig.googleApiKey;
-
-  if (!key) {
+  if (!bearToken) {
     return NextResponse.json(
       {
         error: true,
@@ -63,12 +61,14 @@ async function handle(
     );
   }
 
-  const fetchUrl = `${baseUrl}/${path}?key=${key}`;
+  const fetchUrl = `${baseUrl}/${path}`;
   const fetchOptions: RequestInit = {
     headers: {
       "Content-Type": "application/json",
       "Cache-Control": "no-store",
+      Authorization: `Bearer ${serverConfig.anyScaleKey}`,
     },
+
     method: req.method,
     body: req.body,
     // to fix #2485: https://stackoverflow.com/questions/55920957/cloudflare-worker-typeerror-one-time-use-body

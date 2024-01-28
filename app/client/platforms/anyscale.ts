@@ -216,7 +216,7 @@ export class AnyscaleGPTApi implements LLMApi {
       .mask.modelConfig;
     const apiKey = accessStore.anyscaleKey;
 
-    const makeBearer = (s: string) => `"Bearer "${s.trim()}`;
+    const makeBearer = (s: string) => `Bearer ${s.trim()}`;
     const validString = (x: string) => x && x.length > 0;
 
     // use user's api key first
@@ -241,7 +241,7 @@ export class AnyscaleGPTApi implements LLMApi {
     return [];
   }
   path(path: string): string {
-    return "/api/google/" + path;
+    return "/api/anyscale/" + path;
   }
 }
 export { OpenaiPath };

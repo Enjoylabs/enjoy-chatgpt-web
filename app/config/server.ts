@@ -21,8 +21,8 @@ declare global {
       DISABLE_FAST_LINK?: string; // disallow parse settings from url or not
       CUSTOM_MODELS?: string; // to control custom models
 
-      ANYCALE_API_KEY?: string;
-      ANYCALE_URL?: string;
+      ANYSCALE_API_KEY?: string;
+      ANYSCALE_URL?: string;
 
       // azure only
       AZURE_URL?: string; // https://{azure-url}/openai/deployments/{deploy-name}
@@ -69,7 +69,7 @@ export const getServerSideConfig = () => {
 
   const isAzure = !!process.env.AZURE_URL;
   const isGoogle = !!process.env.GOOGLE_API_KEY;
-  const isAnyscale = !!process.env.ANYCALE_API_KEY;
+  const isAnyscale = !!process.env.ANYSCALE_API_KEY;
 
   const apiKeyEnvVar = process.env.OPENAI_API_KEY ?? "";
   const apiKeys = apiKeyEnvVar.split(",").map((v) => v.trim());
@@ -94,8 +94,8 @@ export const getServerSideConfig = () => {
     googleUrl: process.env.GOOGLE_URL,
 
     isAnyscale,
-    anyScaleKey: process.env.ANYCALE_API_KEY,
-    anyScaleUrl: process.env.ANYCALE_URL,
+    anyScaleKey: process.env.ANYSCALE_API_KEY,
+    anyScaleUrl: process.env.ANYSCALE_URL,
 
     gtmId: process.env.GTM_ID,
 
