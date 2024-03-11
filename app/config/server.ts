@@ -93,9 +93,10 @@ export const getServerSideConfig = () => {
     googleApiKey: process.env.GOOGLE_API_KEY,
     googleUrl: process.env.GOOGLE_URL,
 
-    isAnyscale,
     anyScaleKey: process.env.ANYSCALE_API_KEY,
     anyScaleUrl: process.env.ANYSCALE_URL,
+
+    claudeKey: process.env.CLAUDE_API_KEY,
 
     gtmId: process.env.GTM_ID,
 

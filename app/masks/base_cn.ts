@@ -55,4 +55,22 @@ export const CN_MASKS: BuiltinMask[] = [
     builtin: true,
     createdAt: 1700713360000,
   },
+  {
+    avatar: "1f60e",
+    name: "Claude",
+    context: [],
+    modelConfig: {
+      model: "claude-3-opus-20240229",
+      provider: "claude",
+      temperature: 0.5,
+      max_tokens: 2000,
+      presence_penalty: 0,
+      sendMemory: true,
+      historyMessageCount: 4,
+      compressMessageLengthThreshold: 2000,
+    },
+    lang: "cn",
+    builtin: true,
+    createdAt: 1700713360000,
+  },
 ];

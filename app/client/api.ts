@@ -9,6 +9,7 @@ import { ChatMessage, ModelType, useAccessStore, useChatStore } from "../store";
 import { ChatGPTApi } from "./platforms/openai";
 import { AnyscaleGPTApi } from "./platforms/anyscale";
 import { GeminiProApi } from "./platforms/google";
+import { ClaudeApi } from "./platforms/claude";
 export const ROLES = ["system", "user", "assistant"] as const;
 export type MessageRole = (typeof ROLES)[number];
 
@@ -90,12 +91,13 @@ export class ClientApi {
   constructor(provider: ModelProvider = ModelProvider.GPT) {
     if (provider === ModelProvider.GeminiPro) {
       this.llm = new GeminiProApi();
-      return;
     } else if (provider === ModelProvider.ANYSCALE) {
       this.llm = new AnyscaleGPTApi();
-      return;
+    } else if (provider === ModelProvider.CLAUDE) {
+      this.llm = new ClaudeApi();
+    } else {
+      this.llm = new ChatGPTApi();
     }
-    this.llm = new ChatGPTApi();
   }
 
   config() {}

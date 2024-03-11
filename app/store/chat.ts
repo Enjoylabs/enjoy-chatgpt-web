@@ -316,6 +316,8 @@ export const useChatStore = createPersistStore(
           api = new ClientApi(ModelProvider.GeminiPro);
         } else if (modelConfig.provider == "anyscale") {
           api = new ClientApi(ModelProvider.ANYSCALE);
+        } else if (modelConfig.provider == "claude") {
+          api = new ClientApi(ModelProvider.CLAUDE);
         } else {
           api = new ClientApi(ModelProvider.GPT);
         }

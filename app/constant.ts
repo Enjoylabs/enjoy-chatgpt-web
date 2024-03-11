@@ -75,6 +75,7 @@ export enum ModelProvider {
   GPT = "GPT",
   ANYSCALE = "Anyscale",
   GeminiPro = "GeminiPro",
+  CLAUDE = "claude",
 }
 
 export const OpenaiPath = {
@@ -261,6 +262,16 @@ export const DEFAULT_MODELS = [
       providerType: "llama",
     },
   },
+  {
+    name: "claude-3-opus-20240229",
+    available: true,
+    provider: {
+      id: "Claude 3 Opus",
+      providerName: "Claude 3 Opus",
+      providerType: "claude",
+    },
+  },
+
   {
     name: "gemini-pro",
     available: true,
