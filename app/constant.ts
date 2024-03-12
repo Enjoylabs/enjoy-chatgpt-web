@@ -271,6 +271,15 @@ export const DEFAULT_MODELS = [
       providerType: "claude",
     },
   },
+  {
+    name: "claude-3-sonnet-20240229",
+    available: true,
+    provider: {
+      id: "Claude 3 Sonnet",
+      providerName: "Claude 3 Sonnet",
+      providerType: "claude",
+    },
+  },
 
   {
     name: "gemini-pro",
