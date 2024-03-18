@@ -263,6 +263,15 @@ export const DEFAULT_MODELS = [
     },
   },
   {
+    name: "claude-3-haiku-20240307",
+    available: true,
+    provider: {
+      id: "Claude 3 haiku",
+      providerName: "Claude 3 haiku",
+      providerType: "claude",
+    },
+  },
+  {
     name: "claude-3-opus-20240229",
     available: true,
     provider: {
