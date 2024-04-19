@@ -1,6 +1,6 @@
 branch-defaults:
   main-v2:
-    environment: enjoy-chatgpt-web
+    environment: enjoy-chatgpt-web-env
     group_suffix: null
 global:
   application_name: enjoy-chatgpt-web
@@ -18,3 +18,4 @@ global:
   workspace_type: Application
 deploy:
   artifact: app_prod.zip
+  bucket_name: enjoy-deploy-package

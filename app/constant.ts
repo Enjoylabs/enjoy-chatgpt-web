@@ -263,6 +263,15 @@ export const DEFAULT_MODELS = [
     },
   },
   {
+    name: "meta-llama/Llama-3-70b-chat-hf",
+    available: true,
+    provider: {
+      id: "llama3",
+      providerName: "Llama",
+      providerType: "llama",
+    },
+  },
+  {
     name: "claude-3-haiku-20240307",
     available: true,
     provider: {

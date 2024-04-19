@@ -37,6 +37,7 @@
     "remark-gfm": "^3.0.1",
     "remark-math": "^5.1.1",
     "sass": "^1.59.2",
+    "serverless-next.js": "^1.15.0-alpha.2",
     "spark-md5": "^3.0.2",
     "use-debounce": "^9.0.4",
     "webpack": "^5.88.1",
