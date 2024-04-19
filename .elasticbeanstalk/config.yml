@@ -17,5 +17,5 @@ global:
   sc: git
   workspace_type: Application
 deploy:
-  artifact: app_prod.zip
-  bucket_name: enjoy-deploy-package
+  artifact: app_prod1.zip
+  # bucket_name: enjoy-deploy-package

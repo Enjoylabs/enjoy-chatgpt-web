@@ -1,4 +1,4 @@
-import { Analytics } from "@vercel/analytics/react";
+// import { Analytics } from "@vercel/analytics/react";
 
 import { Home } from "./components/home";
 
@@ -10,11 +10,7 @@ export default async function App() {
   return (
     <>
       <Home />
-      {serverConfig?.isVercel && (
-        <>
-          <Analytics />
-        </>
-      )}
+      {serverConfig?.isVercel && <>{/* <Analytics /> */}</>}
     </>
   );
 }

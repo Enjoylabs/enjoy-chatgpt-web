@@ -1,9 +1,9 @@
 dir="$(dirname "$0")"
-npm install
-npm run build
+# npm install
+# npm run build
 #打包
 rm app_prod.zip
-zip -r app_prod.zip package.json .next/standalone public/ .ebextensions/ .elasticbeanstalk/
+zip -r app_prod1.zip package.json app/* public/ .ebextensions/ .elasticbeanstalk/
 eb deploy --debug
 
 #设置环境变量

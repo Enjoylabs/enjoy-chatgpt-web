@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { sql } from "@vercel/postgres";
 
 export type StrorageMessage = {
   input: string;
@@ -22,7 +21,7 @@ async function handle(req: NextRequest) {
   const access_token = data.access_token;
 
   try {
-    await sql`INSERT INTO message (input, output, tokens,history,model_config,access_token) VALUES (${data.input}, ${data.output}, ${data.tokens}, ${history},${model_config}, ${access_token});`;
+    //await sql`INSERT INTO message (input, output, tokens,history,model_config,access_token) VALUES (${data.input}, ${data.output}, ${data.tokens}, ${history},${model_config}, ${access_token});`;
   } catch (error) {
     console.log([bodyText, error]);
   }
