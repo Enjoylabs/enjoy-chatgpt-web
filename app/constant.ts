@@ -73,7 +73,6 @@ export enum ServiceProvider {
 }
 
 export enum ModelProvider {
-  GPT = "GPT",
   OpenAi = "OpenAi",
   ANYSCALE = "Anyscale",
   Togeter = "Togeter",

@@ -526,7 +526,7 @@ export const useChatStore = createPersistStore(
         if (modelConfig.model === "gemini-pro") {
           api = new ClientApi(ModelProvider.GeminiPro);
         } else {
-          api = new ClientApi(ModelProvider.GPT);
+          api = new ClientApi(ModelProvider.OpenAi);
         }
 
         // remove error messages if any

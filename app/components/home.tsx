@@ -174,7 +174,7 @@ export function useLoadData() {
   if (config.modelConfig.model === "gemini-pro") {
     api = new ClientApi(ModelProvider.GeminiPro);
   } else {
-    api = new ClientApi(ModelProvider.GPT);
+    api = new ClientApi(ModelProvider.OpenAi);
   }
   useEffect(() => {
     (async () => {

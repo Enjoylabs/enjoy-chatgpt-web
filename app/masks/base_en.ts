@@ -1,4 +1,5 @@
 import { BuiltinMask } from "./typing";
+import { ModelProvider } from "../constant";
 
 export const EN_MASKS: BuiltinMask[] = [
   {
@@ -15,7 +16,7 @@ export const EN_MASKS: BuiltinMask[] = [
     ],
     modelConfig: {
       model: "gpt-4-turbo-preview",
-      provider: "openai",
+      provider: ModelProvider.OpenAi,
       temperature: 0.3,
       max_tokens: 2000,
       presence_penalty: 0,

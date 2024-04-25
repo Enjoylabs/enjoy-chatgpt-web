@@ -45,7 +45,7 @@ async function handle(
     );
   }
 
-  const authResult = auth(req, ModelProvider.GPT);
+  const authResult = auth(req, ModelProvider.OpenAi);
   if (authResult.error) {
     return NextResponse.json(authResult, {
       status: 401,

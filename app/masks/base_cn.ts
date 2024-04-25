@@ -1,10 +1,5 @@
 import { BuiltinMask } from "./typing";
-import {
-  DEFAULT_INPUT_TEMPLATE,
-  DEFAULT_MODELS,
-  DEFAULT_SIDEBAR_WIDTH,
-  ModelProvider,
-} from "../constant";
+import { ModelProvider } from "../constant";
 
 export const CN_MASKS: BuiltinMask[] = [
   {
