@@ -312,15 +312,15 @@ export const useChatStore = createPersistStore(
         });
 
         var api: ClientApi;
-        if (modelConfig.model === "gemini-pro") {
-          api = new ClientApi(ModelProvider.GeminiPro);
-        } else if (modelConfig.provider == "anyscale") {
-          api = new ClientApi(ModelProvider.ANYSCALE);
-        } else if (modelConfig.provider == "claude") {
-          api = new ClientApi(ModelProvider.CLAUDE);
-        } else {
-          api = new ClientApi(ModelProvider.GPT);
-        }
+        // if (modelConfig.model === "gemini-pro") {
+        //   api = new ClientApi(ModelProvider.GeminiPro);
+        // } else if (modelConfig.provider == ModelProvider.ANYSCALE) {
+        //   api = new ClientApi(ModelProvider.ANYSCALE);
+        // } else if (modelConfig.provider == "claude") {
+        //   api = new ClientApi(ModelProvider.CLAUDE);
+        // } else {
+        // }
+        api = new ClientApi(modelConfig.provider);
 
         // make request
         api.llm.chat({

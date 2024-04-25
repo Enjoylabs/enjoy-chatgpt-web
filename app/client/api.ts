@@ -10,6 +10,7 @@ import { ChatGPTApi } from "./platforms/openai";
 import { AnyscaleGPTApi } from "./platforms/anyscale";
 import { GeminiProApi } from "./platforms/google";
 import { ClaudeApi } from "./platforms/claude";
+import { TogetherGPTApi } from "./platforms/together";
 export const ROLES = ["system", "user", "assistant"] as const;
 export type MessageRole = (typeof ROLES)[number];
 
@@ -88,13 +89,16 @@ interface ChatProvider {
 export class ClientApi {
   public llm: LLMApi;
 
-  constructor(provider: ModelProvider = ModelProvider.GPT) {
+  constructor(provider: ModelProvider = ModelProvider.OpenAi) {
+    console.log("ClientApi", provider);
     if (provider === ModelProvider.GeminiPro) {
       this.llm = new GeminiProApi();
     } else if (provider === ModelProvider.ANYSCALE) {
       this.llm = new AnyscaleGPTApi();
     } else if (provider === ModelProvider.CLAUDE) {
       this.llm = new ClaudeApi();
+    } else if (provider === ModelProvider.Togeter) {
+      this.llm = new TogetherGPTApi();
     } else {
       this.llm = new ChatGPTApi();
     }
@@ -160,8 +164,8 @@ export function getHeaders() {
   const apiKey = isGoogle
     ? accessStore.googleApiKey
     : isAzure
-    ? accessStore.azureApiKey
-    : accessStore.openaiApiKey;
+      ? accessStore.azureApiKey
+      : accessStore.openaiApiKey;
 
   const makeBearer = (s: string) => `${isAzure ? "" : "Bearer "}${s.trim()}`;
   const validString = (x: string) => x && x.length > 0;

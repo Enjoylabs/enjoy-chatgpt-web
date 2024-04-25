@@ -1,3 +1,5 @@
+# 部署说明
+
 dir="$(dirname "$0")"
 npm install
 npm run build

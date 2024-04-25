@@ -69,13 +69,16 @@ export enum ServiceProvider {
   Azure = "Azure",
   Google = "Google",
   Anyscale = "Anyscale",
+  Togeter = "Togeter",
 }
 
 export enum ModelProvider {
   GPT = "GPT",
+  OpenAi = "OpenAi",
   ANYSCALE = "Anyscale",
+  Togeter = "Togeter",
   GeminiPro = "GeminiPro",
-  CLAUDE = "claude",
+  CLAUDE = "Claude",
 }
 
 export const OpenaiPath = {
@@ -117,197 +120,84 @@ export const KnowledgeCutOffDate: Record<string, string> = {
   "gpt-4-vision-preview": "2023-04",
 };
 
-export const DEFAULT_MODELS = [
-  {
-    name: "gpt-4-turbo-preview",
-    available: true,
-    provider: {
-      id: "openai",
-      providerName: "OpenAI",
-      providerType: "openai",
-    },
-  },
-  {
-    name: "gpt-4-0314",
-    available: true,
-    provider: {
-      id: "openai",
-      providerName: "OpenAI",
-      providerType: "openai",
-    },
-  },
-  {
-    name: "gpt-4-0613",
-    available: true,
-    provider: {
-      id: "openai",
-      providerName: "OpenAI",
-      providerType: "openai",
-    },
-  },
-  {
-    name: "gpt-4-32k",
-    available: true,
-    provider: {
-      id: "openai",
-      providerName: "OpenAI",
-      providerType: "openai",
-    },
-  },
-  {
-    name: "gpt-4-32k-0314",
-    available: true,
-    provider: {
-      id: "openai",
-      providerName: "OpenAI",
-      providerType: "openai",
-    },
-  },
-  {
-    name: "gpt-4-32k-0613",
-    available: true,
-    provider: {
-      id: "openai",
-      providerName: "OpenAI",
-      providerType: "openai",
-    },
-  },
-  {
-    name: "gpt-4-turbo-preview",
-    available: true,
-    provider: {
-      id: "openai",
-      providerName: "OpenAI",
-      providerType: "openai",
-    },
-  },
-  {
-    name: "gpt-4-1106-preview",
-    available: true,
-    provider: {
-      id: "openai",
-      providerName: "OpenAI",
-      providerType: "openai",
-    },
-  },
-  {
-    name: "gpt-4-0125-preview",
-    available: true,
-    provider: {
-      id: "openai",
-      providerName: "OpenAI",
-      providerType: "openai",
-    },
-  },
-  {
-    name: "gpt-4-vision-preview",
-    available: true,
-    provider: {
-      id: "openai",
-      providerName: "OpenAI",
-      providerType: "openai",
-    },
-  },
-  {
-    name: "gpt-3.5-turbo",
-    available: true,
-    provider: {
-      id: "openai",
-      providerName: "OpenAI",
-      providerType: "openai",
-    },
-  },
-  {
-    name: "gpt-3.5-turbo-0301",
-    available: true,
-    provider: {
-      id: "openai",
-      providerName: "OpenAI",
-      providerType: "openai",
-    },
-  },
-  {
-    name: "gpt-3.5-turbo-0613",
-    available: true,
-    provider: {
-      id: "openai",
-      providerName: "OpenAI",
-      providerType: "openai",
-    },
-  },
-  {
-    name: "gpt-3.5-turbo-1106",
-    available: true,
-    provider: {
-      id: "openai",
-      providerName: "OpenAI",
-      providerType: "openai",
-    },
-  },
-  {
-    name: "gpt-3.5-turbo-16k",
-    available: true,
-    provider: {
-      id: "openai",
-      providerName: "OpenAI",
-      providerType: "openai",
-    },
-  },
-  {
-    name: "meta-llama/Llama-2-70b-chat-hf",
-    available: true,
-    provider: {
-      id: "llama",
-      providerName: "Llama",
-      providerType: "llama",
-    },
-  },
-  {
-    name: "meta-llama/Llama-3-70b-chat-hf",
-    available: true,
-    provider: {
-      id: "llama3",
-      providerName: "Llama",
-      providerType: "llama",
-    },
-  },
-  {
-    name: "claude-3-haiku-20240307",
-    available: true,
-    provider: {
-      id: "Claude 3 haiku",
-      providerName: "Claude 3 haiku",
-      providerType: "claude",
-    },
-  },
-  {
-    name: "claude-3-opus-20240229",
-    available: true,
-    provider: {
-      id: "Claude 3 Opus",
-      providerName: "Claude 3 Opus",
-      providerType: "claude",
-    },
-  },
-  {
-    name: "claude-3-sonnet-20240229",
-    available: true,
-    provider: {
-      id: "Claude 3 Sonnet",
-      providerName: "Claude 3 Sonnet",
-      providerType: "claude",
-    },
-  },
+const openaiModels = [
+  "gpt-3.5-turbo",
+  "gpt-3.5-turbo-0301",
+  "gpt-3.5-turbo-0613",
+  "gpt-3.5-turbo-1106",
+  "gpt-3.5-turbo-0125",
+  "gpt-3.5-turbo-16k",
+  "gpt-3.5-turbo-16k-0613",
+  "gpt-4",
+  "gpt-4-0314",
+  "gpt-4-0613",
+  "gpt-4-1106-preview",
+  "gpt-4-0125-preview",
+  "gpt-4-32k",
+  "gpt-4-32k-0314",
+  "gpt-4-32k-0613",
+  "gpt-4-turbo",
+  "gpt-4-turbo-preview",
+  "gpt-4-vision-preview",
+  "gpt-4-turbo-2024-04-09",
+];
 
-  {
-    name: "gemini-pro",
+const anyscaleModels = [
+  "meta-llama/Llama-3-70b-chat-hf",
+  "meta-llama/Llama-2-70b-chat-hf",
+];
+
+const togeterModels = [
+  "Gryphe/MythoMax-L2-13b",
+  "NousResearch/Nous-Hermes-2-Mistral-7B-DPO",
+  "teknium/OpenHermes-2p5-Mistral-7B",
+  "upstage/SOLAR-10.7B-Instruct-v1.0",
+  "WizardLM/WizardLM-13B-V1.2",
+];
+
+const anthropicModels = [
+  "claude-3-sonnet-20240229",
+  "claude-3-opus-20240229",
+  "claude-3-haiku-20240307",
+];
+
+export const DEFAULT_MODELS = [
+  ...openaiModels.map((name) => ({
+    name,
     available: true,
     provider: {
-      id: "google",
-      providerName: "Google",
-      providerType: "google",
+      id: "openai",
+      providerName: ModelProvider.OpenAi,
+      providerType: "openai",
     },
-  },
+  })),
+  ...togeterModels.map((name) => ({
+    name,
+    available: true,
+    provider: {
+      id: "togeter",
+      providerName: ModelProvider.Togeter,
+      providerType: "togeter",
+    },
+  })),
+  ...anyscaleModels.map((name) => ({
+    name,
+    available: true,
+    provider: {
+      id: "anyscale",
+      providerName: ModelProvider.ANYSCALE,
+      providerType: "anyscale",
+    },
+  })),
+  ...anthropicModels.map((name) => ({
+    name,
+    available: true,
+    provider: {
+      id: "anthropic",
+      providerName: ModelProvider.CLAUDE,
+      providerType: "anthropic",
+    },
+  })),
 ] as const;
 
 export const CHAT_PAGE_SIZE = 15;
