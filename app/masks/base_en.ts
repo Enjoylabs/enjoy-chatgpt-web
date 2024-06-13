@@ -29,4 +29,22 @@ export const EN_MASKS: BuiltinMask[] = [
     builtin: true,
     createdAt: 1688899480410,
   },
+  {
+    avatar: "1f60e",
+    name: "gpt-4o",
+    context: [],
+    modelConfig: {
+      model: "gpt-4o",
+      provider: ModelProvider.OpenAi,
+      temperature: 0.5,
+      max_tokens: 2000,
+      presence_penalty: 0,
+      sendMemory: true,
+      historyMessageCount: 4,
+      compressMessageLengthThreshold: 2000,
+    },
+    lang: "cn",
+    builtin: true,
+    createdAt: 1688899480510,
+  },
 ];
