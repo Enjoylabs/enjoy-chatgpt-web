@@ -120,8 +120,8 @@ export const KnowledgeCutOffDate: Record<string, string> = {
 const openaiModels = ["gpt-3.5-turbo", "gpt-4-turbo", "gpt-4o"];
 
 const anyscaleModels = [
-  "meta-llama/Llama-3-70b-chat-hf",
-  "meta-llama/Llama-2-70b-chat-hf",
+  "anyscale_meta-llama/Llama-3-70b-chat-hf",
+  "anyscale_meta-llama/Llama-2-70b-chat-hf",
 ];
 
 const togeterModels = [
@@ -130,6 +130,7 @@ const togeterModels = [
   "teknium/OpenHermes-2p5-Mistral-7B",
   "upstage/SOLAR-10.7B-Instruct-v1.0",
   "WizardLM/WizardLM-13B-V1.2",
+  "meta-llama/Llama-2-70b-chat-hf",
 ];
 
 const anthropicModels = [

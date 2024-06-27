@@ -1,10 +1,6 @@
 import {
-  ApiPath,
-  DEFAULT_API_HOST,
-  DEFAULT_MODELS,
   OpenaiPath,
   REQUEST_TIMEOUT_MS,
-  ServiceProvider,
   ACCESS_CODE_PREFIX,
 } from "@/app/constant";
 import { useAccessStore, useAppConfig, useChatStore } from "@/app/store";
@@ -16,8 +12,6 @@ import {
   fetchEventSource,
 } from "@fortaine/fetch-event-source";
 import { prettyObject } from "@/app/utils/format";
-import { getClientConfig } from "@/app/config/client";
-import { makeAzurePath } from "@/app/azure";
 
 export interface OpenAIListModelResponse {
   object: string;
@@ -52,7 +46,8 @@ export class AnyscaleGPTApi implements LLMApi {
     const requestPayload = {
       messages,
       stream: options.config.stream,
-      model: modelConfig.model,
+      //去掉 anyscale_ 前缀
+      model: modelConfig.model.substring(9),
       temperature: modelConfig.temperature,
       presence_penalty: modelConfig.presence_penalty,
       frequency_penalty: modelConfig.frequency_penalty,
@@ -61,7 +56,7 @@ export class AnyscaleGPTApi implements LLMApi {
       // Please do not ask me why not send max_tokens, no reason, this param is just shit, I dont want to explain anymore.
     };
 
-    //console.log("[Chat Request] openai payload: ", requestPayload);
+    //console.log("[Anyscale Request] payload: ", requestPayload);
 
     const shouldStream = !!options.config.stream;
     const controller = new AbortController();

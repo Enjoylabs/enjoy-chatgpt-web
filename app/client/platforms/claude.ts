@@ -1,11 +1,4 @@
-import {
-  ApiPath,
-  DEFAULT_API_HOST,
-  DEFAULT_MODELS,
-  REQUEST_TIMEOUT_MS,
-  ServiceProvider,
-  ACCESS_CODE_PREFIX,
-} from "@/app/constant";
+import { REQUEST_TIMEOUT_MS, ACCESS_CODE_PREFIX } from "@/app/constant";
 import { useAccessStore, useAppConfig, useChatStore } from "@/app/store";
 
 import { ChatOptions, LLMApi, LLMModel, LLMUsage } from "../api";

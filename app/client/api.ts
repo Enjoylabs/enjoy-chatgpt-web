@@ -90,7 +90,6 @@ export class ClientApi {
   public llm: LLMApi;
 
   constructor(provider: ModelProvider = ModelProvider.OpenAi) {
-    console.log("ClientApi", provider);
     if (provider === ModelProvider.GeminiPro) {
       this.llm = new GeminiProApi();
     } else if (provider === ModelProvider.ANYSCALE) {

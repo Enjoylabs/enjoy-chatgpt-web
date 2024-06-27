@@ -33,7 +33,7 @@ export function auth(req: NextRequest, modelProvider: ModelProvider) {
   const hashedCode = md5.hash(accessCode ?? "").trim();
 
   const serverConfig = getServerSideConfig();
-  console.log("[Auth] service config", serverConfig);
+  //console.log("[Auth] service config", serverConfig);
   //console.log("[Auth] allowed hashed codes: ", [...serverConfig.codes]);
   console.log("[Auth] got access code: {}", accessCode);
   console.log("[Auth] hashed access code:", hashedCode);
@@ -62,8 +62,8 @@ export function auth(req: NextRequest, modelProvider: ModelProvider) {
       modelProvider === ModelProvider.GeminiPro
         ? serverConfig.googleApiKey
         : serverConfig.isAzure
-        ? serverConfig.azureApiKey
-        : serverConfig.apiKey;
+          ? serverConfig.azureApiKey
+          : serverConfig.apiKey;
     if (systemApiKey) {
       console.log("[Auth] use system api key");
       req.headers.set("Authorization", `Bearer ${systemApiKey}`);

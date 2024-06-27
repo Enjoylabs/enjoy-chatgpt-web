@@ -32,6 +32,7 @@ async function handle(
 
   console.log("[AnyScale Proxy] ", path);
   console.log("[AnyScale Base Url]", baseUrl);
+  console.log("[AnyScale Base Url]", baseUrl);
 
   const timeoutId = setTimeout(
     () => {
@@ -40,7 +41,7 @@ async function handle(
     10 * 60 * 1000,
   );
 
-  const authResult = auth(req, ModelProvider.GeminiPro);
+  const authResult = auth(req, ModelProvider.ANYSCALE);
   if (authResult.error) {
     return NextResponse.json(authResult, {
       status: 401,
